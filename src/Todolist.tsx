@@ -37,6 +37,16 @@ export const Todolist: React.FC<TodolistType> = memo(({
                                                  }) => {
 
 
+    let filteredTasks: TaskType[] = [...tasks]
+
+    if (filter === "completed") {
+        filteredTasks = tasks.filter(t => t.isDone)
+    }
+
+    if (filter === "active") {
+        filteredTasks = tasks.filter(t => !t.isDone)
+    }
+
     const removeListHandler = () => {
         removeList(listId);
     }
@@ -71,7 +81,7 @@ export const Todolist: React.FC<TodolistType> = memo(({
             </div>
             <AddItem buttonVariant={"contained"} sxButtonStyles={AddTaskButton} addItem={addTaskHandler} buttonName={"+"}/>
             <ul className={s.ul}>
-                {tasks.map((task) => (
+                {filteredTasks.map((task) => (
                     <li className={`${s.li} + ${task.isDone ? s.done : ""}`} key={task.id}>
                         <Checkbox onChange={(e) => setDoneHandler(e, task.id)}/>
                         <DynamicField currentTitle={task.title} setValue={(title) =>changeTaskTitleHandler(title, task.id)}/>

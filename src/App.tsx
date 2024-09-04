@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
@@ -10,6 +10,14 @@ import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
 import {ApplicationBar} from "./ApplicationBar";
 import CssBaseline from '@mui/material/CssBaseline';
+import {
+    addListTaskAc,
+    addTaskAc,
+    changeTaskTitleAc,
+    removeTaskAc,
+    TaskReducer,
+    taskSetDoneAc
+} from "./model/TasksReducer";
 
 export type TaskType = {
     id: string
@@ -17,7 +25,7 @@ export type TaskType = {
     isDone: boolean
 }
 
-type TasksType = {
+export type TasksType = {
     [listId: string]: TaskType[]
 }
 export type FilterType = "all" | "completed" | "active"
@@ -46,22 +54,31 @@ function App() {
     ]
 
     const [currentLists, setCurrentLists] = useState<ListType[]>(lists);
-    const [currentTasks, setCurrentTasks] = useState<TasksType>({...tasks})
+    const [currentTasks, dispatchCurrentTasks] = useReducer(TaskReducer, tasks)
+
+    const addTask = (listId: string, title: string) => {
+        dispatchCurrentTasks(addTaskAc(listId, title))
+    }
+    const setDoneHandler = (listId: string, id: string, isDone: boolean) => {
+        dispatchCurrentTasks(taskSetDoneAc(listId, id, isDone))
+    }
+    const removeTask = (listId: string, taskId: string) => {
+        dispatchCurrentTasks(removeTaskAc(listId, taskId))
+    }
+    const changeTaskTitle = (listId: string, title: string, id: string) => {
+        dispatchCurrentTasks(changeTaskTitleAc(listId, id, title))
+    }
+
 
     const addListHandler = (title: string) => {
         let newId = v1();
         setCurrentLists([...currentLists, {listId: newId, title, filter: "all"}])
-        setCurrentTasks({...currentTasks, [newId]: []})
+        dispatchCurrentTasks(addListTaskAc(newId))
     }
 
     const removeListHandler = (listId: string) => {
         setCurrentLists(currentLists.filter(list => list.listId !== listId))
         delete currentTasks[listId]
-    }
-
-    const addTask = (listId: string, title: string) => {
-        console.log(currentTasks[listId]);
-        setCurrentTasks({...currentTasks, [listId]: [{id: v1(), title, isDone: false}, ...currentTasks[listId]]})
     }
 
     const setFilterHandler = (listId: string, filter: FilterType) => {
@@ -70,25 +87,6 @@ function App() {
             currentList.filter = filter
         }
         setCurrentLists([...currentLists])
-    }
-
-    const setDoneHandler = (listId: string, id: string, isDone: boolean) => {
-        let currentTask = currentTasks[listId].find(t => t.id === id);
-        if (currentTask) {
-            currentTask.isDone = isDone
-        }
-        setCurrentTasks({...currentTasks})
-    }
-
-    const removeTask = (listId: string, taskId: string) => {
-        setCurrentTasks({...currentTasks, [listId]: currentTasks[listId].filter(task => task.id !== taskId)})
-    }
-
-    const changeTaskTitle = (listId: string, title: string, id: string) => {
-        setCurrentTasks({
-            ...currentTasks,
-            [listId]: currentTasks[listId].map(task => task.id === id ? {...task, title} : task)
-        })
     }
 
     const changeListTitle = (listId: string, title: string) => {
@@ -103,7 +101,7 @@ function App() {
 
     const MyTheme = createTheme({
         palette: {
-            mode: themeMode? "dark" : "light"
+            mode: themeMode ? "dark" : "light"
         }
     })
 
@@ -117,40 +115,29 @@ function App() {
                     <AddItem sxInputStyles={AddItemInput} sxButtonStyles={{height: "40px"}} buttonVariant={"contained"}
                              addItem={addListHandler} buttonName={"Add List"}/>
                 </Grid>
-                    <Grid container>
-                            {currentLists.map((list) => {
-
-                                let pushedTasks: TaskType[] = [...currentTasks[list.listId]]
-
-                                if (list.filter === "completed") {
-                                    pushedTasks = currentTasks[list.listId].filter(t => t.isDone)
-                                }
-
-                                if (list.filter === "active") {
-                                    pushedTasks = currentTasks[list.listId].filter(t => !t.isDone)
-                                }
-
-                                return (
-                                    <Grid size={4}>
-                                        <Paper sx={{padding: "10px", margin: "15px"}} elevation={3}>
-                                            <Todolist key={list.listId}
-                                                      listTitle={list.title}
-                                                      tasks={pushedTasks}
-                                                      removeList={removeListHandler}
-                                                      listId={list.listId}
-                                                      addTask={addTask}
-                                                      setFilter={setFilterHandler}
-                                                      setDone={setDoneHandler}
-                                                      removeTask={removeTask}
-                                                      filter={list.filter}
-                                                      changeTaskTitle={changeTaskTitle}
-                                                      changeListTitle={changeListTitle}
-                                            />
-                                        </Paper>
-                                    </Grid>
-                                )
-                            })}
-                    </Grid>
+                <Grid container>
+                    {currentLists.map((list) => {
+                        return (
+                            <Grid size={4}>
+                                <Paper sx={{padding: "10px", margin: "15px"}} elevation={3}>
+                                    <Todolist key={list.listId}
+                                              listTitle={list.title}
+                                              tasks={currentTasks[list.listId]}
+                                              removeList={removeListHandler}
+                                              listId={list.listId}
+                                              addTask={addTask}
+                                              setFilter={setFilterHandler}
+                                              setDone={setDoneHandler}
+                                              removeTask={removeTask}
+                                              filter={list.filter}
+                                              changeTaskTitle={changeTaskTitle}
+                                              changeListTitle={changeListTitle}
+                                    />
+                                </Paper>
+                            </Grid>
+                        )
+                    })}
+                </Grid>
 
             </Container>
             <CssBaseline/>
