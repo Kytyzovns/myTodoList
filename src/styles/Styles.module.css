@@ -1,0 +1,46 @@
+.list {
+    max-width: 300px;
+    margin: 20px;
+}
+
+.lists {
+display: flex;
+}
+
+.done {
+    opacity: 0.5;
+}
+
+.ul {
+    list-style: none;
+    padding: 0;
+}
+
+.li {
+    margin: 0;
+}
+
+.all {
+
+}
+
+.inputError {
+    outline: 1px solid red;
+}
+
+.error {
+    color: red;
+}
+
+.activeButton {
+    background-color: aqua;
+}
+
+.titleStyle {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.dynamicSpan {
+    word-break: break-all;
+}
