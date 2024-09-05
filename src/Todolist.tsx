@@ -83,7 +83,7 @@ export const Todolist: React.FC<TodolistType> = memo(({
             <ul className={s.ul}>
                 {filteredTasks.map((task) => (
                     <li className={`${s.li} + ${task.isDone ? s.done : ""}`} key={task.id}>
-                        <Checkbox onChange={(e) => setDoneHandler(e, task.id)}/>
+                        <Checkbox checked={task.isDone} onChange={(e) => setDoneHandler(e, task.id)}/>
                         <DynamicField currentTitle={task.title} setValue={(title) =>changeTaskTitleHandler(title, task.id)}/>
                         <IconButton onClick={() => removeTaskHandler(task.id)}>
                             <DeleteIcon/>

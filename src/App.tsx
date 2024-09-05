@@ -18,6 +18,13 @@ import {
     TaskReducer,
     taskSetDoneAc
 } from "./model/TasksReducer";
+import {
+    addListActionAc,
+    changeListTitleActionAc,
+    ListsReducer,
+    removeListActionAc,
+    setFilterActionAc
+} from "./model/ListsReducer";
 
 export type TaskType = {
     id: string
@@ -30,7 +37,7 @@ export type TasksType = {
 }
 export type FilterType = "all" | "completed" | "active"
 
-type ListType = {
+export type ListType = {
     listId: string
     title: string
     filter: FilterType
@@ -53,7 +60,7 @@ function App() {
         {listId: listID, title: "first list", filter: "all"}
     ]
 
-    const [currentLists, setCurrentLists] = useState<ListType[]>(lists);
+    const [currentLists, dispatchCurrentLists] = useReducer(ListsReducer, lists);
     const [currentTasks, dispatchCurrentTasks] = useReducer(TaskReducer, tasks)
 
     const addTask = (listId: string, title: string) => {
@@ -72,28 +79,20 @@ function App() {
 
     const addListHandler = (title: string) => {
         let newId = v1();
-        setCurrentLists([...currentLists, {listId: newId, title, filter: "all"}])
+        dispatchCurrentLists(addListActionAc(title, newId))
         dispatchCurrentTasks(addListTaskAc(newId))
     }
-
     const removeListHandler = (listId: string) => {
-        setCurrentLists(currentLists.filter(list => list.listId !== listId))
-        delete currentTasks[listId]
+        dispatchCurrentLists(removeListActionAc(listId))
     }
-
     const setFilterHandler = (listId: string, filter: FilterType) => {
-        let currentList = currentLists.find(l => l.listId === listId);
-        if (currentList) {
-            currentList.filter = filter
-        }
-        setCurrentLists([...currentLists])
+        dispatchCurrentLists(setFilterActionAc(listId, filter))
     }
-
     const changeListTitle = (listId: string, title: string) => {
-        setCurrentLists(currentLists.map(list => list.listId === listId ? {...list, title} : list))
+        dispatchCurrentLists(changeListTitleActionAc(listId, title))
     }
 
-    const [themeMode, setThemeMode] = useState<boolean>(true)
+    const [themeMode, setThemeMode] = useState<boolean>(false)
 
     const changeTheme = () => {
         setThemeMode(!themeMode);
