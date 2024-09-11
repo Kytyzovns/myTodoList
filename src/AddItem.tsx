@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
 import Button from '@mui/material/Button'
 import {SxProps} from "@mui/material";
 import TextField from '@mui/material/TextField';
@@ -11,7 +11,7 @@ type AddItemProps = {
     sxInputStyles?: SxProps
 }
 
-export function AddItem({addItem, buttonName, buttonVariant, sxButtonStyles, sxInputStyles}: AddItemProps) {
+export const AddItem = memo(({addItem, buttonName, buttonVariant, sxButtonStyles, sxInputStyles}: AddItemProps) => {
 
     const [currentTitle, setCurrentTitle] = useState("");
     const [error, setError] = useState<null | string>(null)
@@ -45,4 +45,4 @@ export function AddItem({addItem, buttonName, buttonVariant, sxButtonStyles, sxI
         </div>
 
     )
-}
+})

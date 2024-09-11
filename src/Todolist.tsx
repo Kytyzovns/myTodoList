@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo} from 'react';
+import React, {ChangeEvent, memo, useMemo} from 'react';
 import {FilterType, TaskType} from "./App";
 import s from './styles/Styles.module.css'
 import {AddItem} from "./AddItem";
@@ -37,15 +37,16 @@ export const Todolist: React.FC<TodolistType> = memo(({
                                                  }) => {
 
 
-    let filteredTasks: TaskType[] = [...tasks]
-
-    if (filter === "completed") {
-        filteredTasks = tasks.filter(t => t.isDone)
-    }
-
-    if (filter === "active") {
-        filteredTasks = tasks.filter(t => !t.isDone)
-    }
+    let filteredTasks: TaskType[] = useMemo(() => {
+        let fTasks = [...tasks]
+        if (filter === "completed") {
+            fTasks = tasks.filter(t => t.isDone)
+        }
+        if (filter === "active") {
+            fTasks = tasks.filter(t => !t.isDone)
+        }
+        return fTasks
+    }, [tasks, filter])
 
     const removeListHandler = () => {
         removeList(listId);

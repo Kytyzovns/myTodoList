@@ -47,46 +47,15 @@ export const TaskReducer = (state: TasksType, action: ActionType): TasksType => 
 
 type ActionType = removeTaskActionType | addTaskActionType | changeTaskTitleType | addListTaskType | taskSetDoneType
 
-type removeTaskActionType = {
-    type: "REMOVE-TASK",
-    payload: {
-        listId: string
-        id: string
-    }
-}
+type removeTaskActionType = ReturnType<typeof removeTaskAc>
 
-type addTaskActionType = {
-    type: "ADD-TASK",
-    payload: {
-        listId: string
-        title: string
-    }
-}
+type addTaskActionType = ReturnType<typeof addTaskAc>
 
-type changeTaskTitleType = {
-    type: "CHANGE-TASK-TITLE",
-    payload: {
-        listId: string
-        id: string
-        title: string
-    }
-}
+type changeTaskTitleType = ReturnType<typeof changeTaskTitleAc>
 
-type addListTaskType = {
-    type: "ADD-LIST-TASK",
-    payload: {
-        listId: string
-    }
-}
+type addListTaskType = ReturnType<typeof addListTaskAc>
 
-type taskSetDoneType = {
-    type: "SET-DONE",
-    payload: {
-        listId: string
-        id: string
-        isDone: boolean
-    }
-}
+type taskSetDoneType = ReturnType<typeof taskSetDoneAc>
 
 
 export const removeTaskAc = (listId: string, id: string) => {

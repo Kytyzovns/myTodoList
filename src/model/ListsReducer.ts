@@ -21,36 +21,13 @@ export const ListsReducer = (state: ListType[], action: ActionType): ListType[] 
 
 type ActionType = AddListActionType | removeListActionType | setFilterActionType | changeTitleActionType
 
-type AddListActionType = {
-    type: "ADD-LIST"
-    payload: {
-        title: string
-        newId: string
-    }
-}
+type AddListActionType = ReturnType<typeof addListActionAc>
 
-type removeListActionType = {
-    type: "REMOVE-LIST"
-    payload: {
-        listId: string
-    }
-}
+type removeListActionType = ReturnType<typeof removeListActionAc>
 
-type setFilterActionType = {
-    type: "SET-FILTER"
-    payload: {
-        listId: string
-        filter: FilterType
-    }
-}
+type setFilterActionType = ReturnType<typeof setFilterActionAc>
 
-type changeTitleActionType = {
-    type: "CHANGE-TITLE"
-    payload: {
-        listId: string
-        title: string
-    }
-}
+type changeTitleActionType = ReturnType<typeof changeListTitleActionAc>
 
 export const addListActionAc = (title: string, newId: string) => {
     return {
