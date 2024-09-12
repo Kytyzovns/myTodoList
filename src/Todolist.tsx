@@ -38,6 +38,7 @@ export const Todolist: React.FC<TodolistType> = memo(({
 
 
     let filteredTasks: TaskType[] = useMemo(() => {
+        console.log("tasks", tasks)
         let fTasks = [...tasks]
         if (filter === "completed") {
             fTasks = tasks.filter(t => t.isDone)

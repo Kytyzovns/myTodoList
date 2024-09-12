@@ -53,7 +53,7 @@ type addTaskActionType = ReturnType<typeof addTaskAc>
 
 type changeTaskTitleType = ReturnType<typeof changeTaskTitleAc>
 
-type addListTaskType = ReturnType<typeof addListTaskAc>
+export type addListTaskType = ReturnType<typeof addListTaskAc>
 
 type taskSetDoneType = ReturnType<typeof taskSetDoneAc>
 
@@ -82,11 +82,12 @@ export const changeTaskTitleAc = (listId: string, id: string, title: string) => 
     } as const
 }
 
-export const addListTaskAc = (listId: string) => {
+export const addListTaskAc = (title?: string) => {
     return {
         type: "ADD-LIST-TASK",
         payload: {
-            listId,
+            listId: v1(),
+            title
         }
     } as const
 }

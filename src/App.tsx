@@ -19,7 +19,6 @@ import {
     taskSetDoneAc
 } from "./model/TasksReducer";
 import {
-    addListActionAc,
     changeListTitleActionAc,
     ListsReducer,
     removeListActionAc,
@@ -78,9 +77,9 @@ function App() {
 
 
     const addListHandler = (title: string) => {
-        let newId = v1();
-        dispatchCurrentLists(addListActionAc(title, newId))
-        dispatchCurrentTasks(addListTaskAc(newId))
+        let action = addListTaskAc(title)
+        dispatchCurrentLists(action)
+        dispatchCurrentTasks(action)
     }
     const removeListHandler = (listId: string) => {
         dispatchCurrentLists(removeListActionAc(listId))

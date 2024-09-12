@@ -1,9 +1,14 @@
 import {FilterType, ListType} from "../App";
+import {addListTaskType} from "./TasksReducer";
 
 export const ListsReducer = (state: ListType[], action: ActionType): ListType[] => {
     switch (action.type) {
-        case "ADD-LIST": {
-            return [...state, {listId: action.payload.newId, title: action.payload.title, filter: "all"}]
+        case "ADD-LIST-TASK": {
+            return [...state, {
+                listId: action.payload.listId,
+                title: action.payload.title ? action.payload.title : "new list",
+                filter: "all"
+            }]
         }
         case "REMOVE-LIST": {
             return state.filter(l => l.listId !== action.payload.listId)
@@ -19,25 +24,13 @@ export const ListsReducer = (state: ListType[], action: ActionType): ListType[] 
     }
 }
 
-type ActionType = AddListActionType | removeListActionType | setFilterActionType | changeTitleActionType
-
-type AddListActionType = ReturnType<typeof addListActionAc>
+type ActionType = removeListActionType | setFilterActionType | changeTitleActionType | addListTaskType
 
 type removeListActionType = ReturnType<typeof removeListActionAc>
 
 type setFilterActionType = ReturnType<typeof setFilterActionAc>
 
 type changeTitleActionType = ReturnType<typeof changeListTitleActionAc>
-
-export const addListActionAc = (title: string, newId: string) => {
-    return {
-        type: "ADD-LIST",
-        payload: {
-            title,
-            newId
-        }
-    } as const
-}
 
 export const removeListActionAc = (listId: string) => {
     return {

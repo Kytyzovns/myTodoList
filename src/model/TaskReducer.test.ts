@@ -74,12 +74,11 @@ describe('TaskReducer', () => {
             ]
         };
 
-        const newListId = 'list-2';
-        const action = addListTaskAc(newListId);
+        const action = addListTaskAc();
         const newState = TaskReducer(initialState, action);
 
         expect(Object.keys(newState).length).toBe(2);  // Ensure a new list is added
-        expect(newState[newListId]).toEqual([]);  // Ensure the new list is empty
+        expect(newState[action.payload.listId]).toEqual([]);  // Ensure the new list is empty
     });
 
     // Test case for "SET-DONE"
