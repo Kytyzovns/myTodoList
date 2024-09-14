@@ -58,44 +58,38 @@ export type addListTaskType = ReturnType<typeof addListTaskAc>
 type taskSetDoneType = ReturnType<typeof taskSetDoneAc>
 
 
-export const removeTaskAc = (listId: string, id: string) => {
+export const removeTaskAc = (payload: {listId: string, id: string}) => {
     return {
         type: "REMOVE-TASK",
-        payload: {listId, id}
+        payload
     } as const
 }
 
-export const addTaskAc = (listId: string, title: string) => {
+export const addTaskAc = (payload: {listId: string, title: string}) => {
     return {
         type: "ADD-TASK",
-        payload: {
-            listId,
-            title
-        }
+        payload
     } as const
 }
 
-export const changeTaskTitleAc = (listId: string, id: string, title: string) => {
+export const changeTaskTitleAc = (payload: {listId: string, id: string, title: string}) => {
     return {
         type: "CHANGE-TASK-TITLE",
-        payload: {listId, id, title}
+        payload
     } as const
 }
 
-export const addListTaskAc = (title?: string) => {
+export const addListTaskAc = (payload: {title?: string}) => {
     return {
         type: "ADD-LIST-TASK",
-        payload: {
-            listId: v1(),
-            title
-        }
+        payload: {...payload, listId: v1()}
     } as const
 }
 
-export const taskSetDoneAc = (listId: string, id: string, isDone: boolean) => {
+export const taskSetDoneAc = (payload: {listId: string, id: string, isDone: boolean}) => {
     return {
         type: "SET-DONE",
-        payload: {listId, id, isDone}
+        payload
     } as const
 }
 

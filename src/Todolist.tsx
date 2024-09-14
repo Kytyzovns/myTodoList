@@ -1,4 +1,4 @@
-import React, {ChangeEvent, memo, useMemo} from 'react';
+import React, {ChangeEvent, memo, useCallback, useMemo} from 'react';
 import {FilterType, TaskType} from "./App";
 import s from './styles/Styles.module.css'
 import {AddItem} from "./AddItem";
@@ -49,29 +49,29 @@ export const Todolist: React.FC<TodolistType> = memo(({
         return fTasks
     }, [tasks, filter])
 
-    const removeListHandler = () => {
+    const removeListHandler = useCallback(() => {
         removeList(listId);
-    }
+    }, []);
 
-    const setDoneHandler = (e: ChangeEvent<HTMLInputElement>, id: string) => {
-        setDone(listId, id, e.currentTarget.checked)
-    }
+    const setDoneHandler = useCallback((e: ChangeEvent<HTMLInputElement>, id: string) => {
+        setDone(listId, id, e.currentTarget.checked);
+    }, []);
 
-    const removeTaskHandler = (taskId: string) => {
-        removeTask(listId, taskId)
-    }
+    const removeTaskHandler = useCallback((taskId: string) => {
+        removeTask(listId, taskId);
+    }, []);
 
-    const addTaskHandler = (title: string) => {
-        addTask(listId, title)
-    }
+    const addTaskHandler = useCallback((title: string) => {
+        addTask(listId, title);
+    }, []);
 
-    const changeTaskTitleHandler = (title: string, id: string) => {
-        changeTaskTitle(listId, title, id)
-    }
+    const changeTaskTitleHandler = useCallback((title: string, id: string) => {
+        changeTaskTitle(listId, title, id);
+    }, []);
 
-    const changeListTitleHandler = (title: string) => {
-        changeListTitle(listId, title)
-    }
+    const changeListTitleHandler = useCallback((title: string) => {
+        changeListTitle(listId, title);
+    }, []);
 
     return (
         <div className={s.list}>

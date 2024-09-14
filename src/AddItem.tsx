@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, memo, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, memo, useCallback, useState} from "react";
 import Button from '@mui/material/Button'
 import {SxProps} from "@mui/material";
 import TextField from '@mui/material/TextField';
@@ -16,25 +16,25 @@ export const AddItem = memo(({addItem, buttonName, buttonVariant, sxButtonStyles
     const [currentTitle, setCurrentTitle] = useState("");
     const [error, setError] = useState<null | string>(null)
 
-    const addTaskItemHandler = () => {
+    const addTaskItemHandler = useCallback(() => {
         if (!currentTitle.trim()) {
-            setError("required field")
+            setError("required field");
         } else {
             addItem(currentTitle);
             setCurrentTitle('');
         }
-    }
+    }, [currentTitle]);
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setCurrentTitle(e.currentTarget.value);
         setError(null);
-    }
+    }, []);
 
-    const InputPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+    const InputPressHandler = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
-            addTaskItemHandler()
+            addTaskItemHandler();
         }
-    }
+    }, []);
 
     return (
         <div>

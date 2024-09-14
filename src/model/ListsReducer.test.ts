@@ -1,52 +1,52 @@
-import {ListsReducer} from './ListsReducer';
-import {removeListActionAc, setFilterActionAc, changeListTitleActionAc} from './ListsReducer';
-import {FilterType, ListType} from '../App';
-import {addListTaskAc} from "./TasksReducer";
 
-describe('ListsReducer', () => {
+import { FilterType, ListType } from "../App";
+import {addListTaskType} from "./TasksReducer";
+import {changeListTitleActionAc, ListsReducer, removeListActionAc, setFilterActionAc} from "./ListsReducer";
 
+describe("ListsReducer", () => {
     let initialState: ListType[];
 
     beforeEach(() => {
         initialState = [
-            {listId: '1', title: 'List 1', filter: 'all'},
-            {listId: '2', title: 'List 2', filter: 'all'},
+            { listId: "1", title: "Groceries", filter: "all" },
+            { listId: "2", title: "Work", filter: "active" }
         ];
     });
 
-    // Test for ADD-LIST action
-    test('should add a new list when "ADD-LIST" action is dispatched', () => {
-        const action = addListTaskAc('New List');
-        const newState = ListsReducer(initialState, action);
+    test("should add a new list task", () => {
+        const action: addListTaskType = {
+            type: "ADD-LIST-TASK",
+            payload: { listId: "3", title: "New Task" }
+        };
 
+        const newState = ListsReducer(initialState, action);
         expect(newState.length).toBe(3);
+        expect(newState[2].title).toBe("New Task");
     });
 
-    // Test for REMOVE-LIST action
-    test('should remove the list when "REMOVE-LIST" action is dispatched', () => {
-        const action = removeListActionAc('1');
+    test("should remove a list by id", () => {
+        const action = removeListActionAc({ listId: "1" });
         const newState = ListsReducer(initialState, action);
-
         expect(newState.length).toBe(1);
-        expect(newState[0].listId).toBe('2');
+        expect(newState[0].listId).toBe("2");
     });
 
-    // Test for CHANGE-TITLE action
-    test('should change the title of a list when "CHANGE-TITLE" action is dispatched', () => {
-        const action = changeListTitleActionAc('1', 'Updated List 1');
+    test("should change the title of the list", () => {
+        const action = changeListTitleActionAc({ listId: "1", title: "Updated Groceries" });
         const newState = ListsReducer(initialState, action);
-
-        expect(newState.length).toBe(2);
-        expect(newState[0].title).toBe('Updated List 1');
+        expect(newState[0].title).toBe("Updated Groceries");
+        expect(newState[1].title).toBe("Work");
     });
 
-    // Test for SET-FILTER action
-    test('should set the filter of a list when "SET-FILTER" action is dispatched', () => {
-        const action = setFilterActionAc('2', 'completed' as FilterType);
+    test("should set filter for a list", () => {
+        const action = setFilterActionAc({ listId: "2", filter: "completed" as FilterType });
         const newState = ListsReducer(initialState, action);
-
-        expect(newState.length).toBe(2);
-        expect(newState[1].filter).toBe('completed');
+        expect(newState[1].filter).toBe("completed");
     });
 
+    test("should return the default state if the action type is not recognized", () => {
+        const action = { type: "UNKNOWN_ACTION" };
+        const newState = ListsReducer(initialState, action as any);
+        expect(newState).toEqual(initialState);
+    });
 });

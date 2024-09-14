@@ -32,31 +32,23 @@ type setFilterActionType = ReturnType<typeof setFilterActionAc>
 
 type changeTitleActionType = ReturnType<typeof changeListTitleActionAc>
 
-export const removeListActionAc = (listId: string) => {
+export const removeListActionAc = (payload: {listId: string}) => {
     return {
         type: "REMOVE-LIST",
-        payload: {
-            listId
-        }
+        payload
     } as const
 }
 
-export const setFilterActionAc = (listId: string, filter: FilterType) => {
+export const setFilterActionAc = (payload: {listId: string, filter: FilterType}) => {
     return {
         type: "SET-FILTER",
-        payload: {
-            listId,
-            filter
-        }
+        payload
     } as const
 }
 
-export const changeListTitleActionAc = (listId: string, title: string) => {
+export const changeListTitleActionAc = (payload: {listId: string, title: string}) => {
     return {
         type: "CHANGE-TITLE",
-        payload: {
-            listId,
-            title
-        }
+        payload
     } as const
 }

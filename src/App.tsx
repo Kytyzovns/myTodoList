@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useCallback, useReducer, useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
@@ -62,34 +62,34 @@ function App() {
     const [currentLists, dispatchCurrentLists] = useReducer(ListsReducer, lists);
     const [currentTasks, dispatchCurrentTasks] = useReducer(TaskReducer, tasks)
 
-    const addTask = (listId: string, title: string) => {
-        dispatchCurrentTasks(addTaskAc(listId, title))
-    }
-    const setDoneHandler = (listId: string, id: string, isDone: boolean) => {
-        dispatchCurrentTasks(taskSetDoneAc(listId, id, isDone))
-    }
-    const removeTask = (listId: string, taskId: string) => {
-        dispatchCurrentTasks(removeTaskAc(listId, taskId))
-    }
-    const changeTaskTitle = (listId: string, title: string, id: string) => {
-        dispatchCurrentTasks(changeTaskTitleAc(listId, id, title))
-    }
+    const addTask = useCallback((listId: string, title: string) => {
+        dispatchCurrentTasks(addTaskAc({listId, title}))
+    }, [])
+    const setDoneHandler = useCallback((listId: string, id: string, isDone: boolean) => {
+        dispatchCurrentTasks(taskSetDoneAc({isDone, id, listId}))
+    }, [])
+    const removeTask = useCallback((listId: string, id: string) => {
+        dispatchCurrentTasks(removeTaskAc({listId, id}))
+    }, [])
+    const changeTaskTitle = useCallback((listId: string, title: string, id: string) => {
+        dispatchCurrentTasks(changeTaskTitleAc({title, id, listId}))
+    }, [])
 
 
-    const addListHandler = (title: string) => {
-        let action = addListTaskAc(title)
+    const addListHandler = useCallback((title: string) => {
+        let action = addListTaskAc({title})
         dispatchCurrentLists(action)
         dispatchCurrentTasks(action)
-    }
-    const removeListHandler = (listId: string) => {
-        dispatchCurrentLists(removeListActionAc(listId))
-    }
-    const setFilterHandler = (listId: string, filter: FilterType) => {
-        dispatchCurrentLists(setFilterActionAc(listId, filter))
-    }
-    const changeListTitle = (listId: string, title: string) => {
-        dispatchCurrentLists(changeListTitleActionAc(listId, title))
-    }
+    }, [])
+    const removeListHandler = useCallback((listId: string) => {
+        dispatchCurrentLists(removeListActionAc({listId}))
+    }, [])
+    const setFilterHandler = useCallback((listId: string, filter: FilterType) => {
+        dispatchCurrentLists(setFilterActionAc({filter, listId}))
+    }, [])
+    const changeListTitle = useCallback((listId: string, title: string) => {
+        dispatchCurrentLists(changeListTitleActionAc({listId, title}))
+    }, [])
 
     const [themeMode, setThemeMode] = useState<boolean>(false)
 
