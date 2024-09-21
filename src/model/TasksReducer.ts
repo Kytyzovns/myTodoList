@@ -1,7 +1,7 @@
 import {TasksType} from "../App";
 import {v1} from "uuid";
 
-export const TaskReducer = (state: TasksType, action: ActionType): TasksType => {
+export const TaskReducer = (state: TasksType = {}, action: ActionType): TasksType => {
     switch (action.type) {
         case "REMOVE-TASK": {
             return {

@@ -1,7 +1,7 @@
 import {FilterType, ListType} from "../App";
 import {addListTaskType} from "./TasksReducer";
 
-export const ListsReducer = (state: ListType[], action: ActionType): ListType[] => {
+export const ListsReducer = (state: ListType[] = [], action: ActionType): ListType[] => {
     switch (action.type) {
         case "ADD-LIST-TASK": {
             return [...state, {

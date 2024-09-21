@@ -7,7 +7,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Switch from '@mui/material/Switch';
-import {memo} from "react";
+import {memo, useCallback, useState} from "react";
+import {Sidebar} from "./sidebar/Sidebar";
+import s from "./sidebar/Sidebar.module.css";
 
 type ApplicationBarProps = {
     changeTheme: () => void
@@ -15,8 +17,15 @@ type ApplicationBarProps = {
 }
 
 export const ApplicationBar = memo(({changeTheme, themeOn}: ApplicationBarProps) => {
+
+    const [openMenu, setOpenMenu]= useState<boolean>(false)
+
+    const onClickHandler = useCallback(() => setOpenMenu(prevState => !prevState), []);
+
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{flexGrow: 1}}>
+            {openMenu && <div onClick={onClickHandler} className={s.back}></div>}
+            <Sidebar open={openMenu} openChange={onClickHandler}/>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -24,11 +33,12 @@ export const ApplicationBar = memo(({changeTheme, themeOn}: ApplicationBarProps)
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        sx={{mr: 2}}
+                        onClick={onClickHandler}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         News
                     </Typography>
                     <Switch color={"secondary"} checked={themeOn} onChange={changeTheme}/>
