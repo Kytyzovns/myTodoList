@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {Route, Routes} from "react-router-dom";
 import {Lists} from "./styles/Lists";
 import {About} from "./About";
+import {themeCreator} from "./common/theme/theme";
 
 export type TaskType = {
     id: string
@@ -29,19 +30,17 @@ export const PATH = {
     ABOUT: "/about",
 }
 
+export type themeModeType = "dark" | "light"
+
 function App() {
 
-    const [themeMode, setThemeMode] = useState<boolean>(false)
+    const [themeMode, setThemeMode] = useState<themeModeType>("light")
 
     const changeTheme = () => {
-        setThemeMode(!themeMode);
+        setThemeMode(prevState => prevState === "dark" ? "light" : "dark");
     }
 
-    const MyTheme = createTheme({
-        palette: {
-            mode: themeMode ? "dark" : "light"
-        }
-    })
+    const MyTheme = themeCreator(themeMode)
 
     return (
         <ThemeProvider theme={MyTheme}>

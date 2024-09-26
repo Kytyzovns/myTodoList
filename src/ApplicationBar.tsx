@@ -10,10 +10,11 @@ import Switch from '@mui/material/Switch';
 import {memo, useCallback, useState} from "react";
 import {Sidebar} from "./sidebar/Sidebar";
 import s from "./sidebar/Sidebar.module.css";
+import {themeModeType} from "./App";
 
 type ApplicationBarProps = {
     changeTheme: () => void
-    themeOn: boolean
+    themeOn: themeModeType
 }
 
 export const ApplicationBar = memo(({changeTheme, themeOn}: ApplicationBarProps) => {
@@ -41,7 +42,7 @@ export const ApplicationBar = memo(({changeTheme, themeOn}: ApplicationBarProps)
                     <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         News
                     </Typography>
-                    <Switch color={"secondary"} checked={themeOn} onChange={changeTheme}/>
+                    <Switch color={"secondary"} checked={themeOn === "light"} onChange={changeTheme}/>
                     <Button color="inherit">Login</Button>
                 </Toolbar>
             </AppBar>
