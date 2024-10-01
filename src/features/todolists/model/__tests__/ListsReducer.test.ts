@@ -1,7 +1,13 @@
 
-import { FilterType, ListType } from "../App";
-import {addListTaskType} from "./TasksReducer";
-import {changeListTitleActionAc, ListsReducer, removeListActionAc, setFilterActionAc} from "./ListsReducer";
+import {addListTaskType} from "../TasksReducer";
+import {
+    changeListTitleActionAc,
+    FilterType,
+    ListsReducer,
+    ListType,
+    removeListActionAc,
+    setFilterActionAc
+} from "../ListsReducer";
 
 describe("ListsReducer", () => {
     let initialState: ListType[];

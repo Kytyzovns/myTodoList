@@ -8,13 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Switch from '@mui/material/Switch';
 import {memo, useCallback, useState} from "react";
-import {Sidebar} from "./sidebar/Sidebar";
-import s from "./sidebar/Sidebar.module.css";
-import {themeModeType} from "./App";
+import {Sidebar} from "../sidebar/Sidebar";
+import s from "../sidebar/Sidebar.module.css";
+import {ThemeModeType} from "../../../app/app-reducer";
 
 type ApplicationBarProps = {
     changeTheme: () => void
-    themeOn: themeModeType
+    themeOn: ThemeModeType
 }
 
 export const ApplicationBar = memo(({changeTheme, themeOn}: ApplicationBarProps) => {

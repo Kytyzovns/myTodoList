@@ -1,5 +1,14 @@
-import {TasksType} from "../App";
 import {v1} from "uuid";
+
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+
+export type TasksType = {
+    [listId: string]: TaskType[]
+}
 
 export const TaskReducer = (state: TasksType = {}, action: ActionType): TasksType => {
     switch (action.type) {

@@ -1,6 +1,13 @@
-import { TasksType } from "../App";
 import { v1 } from "uuid";
-import {addListTaskAc, addTaskAc, changeTaskTitleAc, removeTaskAc, TaskReducer, taskSetDoneAc} from "./TasksReducer";
+import {
+    addListTaskAc,
+    addTaskAc,
+    changeTaskTitleAc,
+    removeTaskAc,
+    TaskReducer,
+    taskSetDoneAc,
+    TasksType
+} from "../TasksReducer";
 
 describe("TaskReducer", () => {
     let initialState: TasksType;

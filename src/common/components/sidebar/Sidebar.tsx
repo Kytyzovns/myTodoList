@@ -1,9 +1,9 @@
 import React from 'react';
 import {IconButton, useTheme} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import {PATH} from "../App";
 import s from "./Sidebar.module.css"
 import {StyledBox, StyledLink} from "./SidebarStyled";
+import {PATH} from "../../../app/Main";
 
 type SidebarProps = {
     open: boolean

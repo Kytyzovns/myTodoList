@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import {ChangeEvent, useCallback} from "react";
-import s from './styles/Styles.module.css'
+import s from '../../../styles/Styles.module.css'
 import {memo} from "react";
 
 

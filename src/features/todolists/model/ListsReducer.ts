@@ -1,5 +1,12 @@
-import {FilterType, ListType} from "../App";
 import {addListTaskType} from "./TasksReducer";
+
+export type FilterType = "all" | "completed" | "active"
+
+export type ListType = {
+    listId: string
+    title: string
+    filter: FilterType
+}
 
 export const ListsReducer = (state: ListType[] = [], action: ActionType): ListType[] => {
     switch (action.type) {
