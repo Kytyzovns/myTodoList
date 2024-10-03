@@ -9,7 +9,9 @@ const fullReducer = combineReducers({
     app: appReducer
 })
 
-export type StoreType = ReturnType<typeof fullReducer>;
+export type RootState = ReturnType<typeof fullReducer>;
+
+export type AppDispatch = typeof store.dispatch;
 
 export const store = createStore(fullReducer)
 

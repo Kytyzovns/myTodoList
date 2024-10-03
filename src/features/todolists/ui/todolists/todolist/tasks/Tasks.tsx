@@ -1,17 +1,17 @@
 import React, {useMemo} from 'react';
 import s from "../../../../../../styles/Styles.module.css";
-import {TasksType, TaskType} from "../../../../model/TasksReducer";
-import {useSelector} from "react-redux";
-import {StoreType} from "../../../../model/store";
+import {TaskType} from "../../../../model/TasksReducer";
 import {ListType} from "../../../../model/ListsReducer";
 import {Task} from "./task/Task";
+import {useAppSelector} from "../../../../../../common/hooks/useAppSelector";
+import {tasksSelector} from "../../../../model/tasksSelectors";
 
 type TasksProps = {
     list: ListType
 }
 export const Tasks = ({list}: TasksProps) => {
     const {filter, listId} = list
-    const tasks = useSelector<StoreType, TasksType>(state => state.tasks)
+    const tasks = useAppSelector(tasksSelector)
 
     const filteredTasks: TaskType[] = useMemo(() => {
         console.log("tasks", tasks)

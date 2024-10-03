@@ -4,15 +4,17 @@ import {ThemeProvider} from '@mui/material/styles';
 import {ApplicationBar} from "../common/components/Header/ApplicationBar";
 import CssBaseline from '@mui/material/CssBaseline';
 import {themeCreator} from "../common/theme/theme";
-import {useDispatch, useSelector} from "react-redux";
-import {StoreType} from "../features/todolists/model/store";
-import {changeThemeAC, ThemeModeType} from "./app-reducer";
+import {changeThemeAC} from "./app-reducer";
 import {Main} from "./Main";
+import {useAppDispatch} from "../common/hooks/useAppDispatch";
+import {useAppSelector} from "../common/hooks/useAppSelector";
+import {selectThemeMode} from "./appSelectors";
+
 
 export const App = () => {
 
-    const themeMode = useSelector<StoreType, ThemeModeType>(state => state.app.themeMode)
-    const dispatch = useDispatch();
+    const themeMode = useAppSelector(selectThemeMode)
+    const dispatch = useAppDispatch();
 
     const changeTheme = () => {
         dispatch(changeThemeAC(themeMode === "dark" ? "light" : "dark"));

@@ -5,14 +5,15 @@ import {AddItem} from "../../../../common/components/AddItem/AddItem";
 import {AddItemInput} from "../../../../MaterialStyles";
 import Paper from "@mui/material/Paper";
 import {Todolist} from "./todolist/Todolist";
-import {useDispatch, useSelector} from "react-redux";
-import {StoreType} from "../../model/store";
+import {useDispatch} from "react-redux";
 import {addListTaskAc} from "../../model/TasksReducer";
-import {ListType} from "../../model/ListsReducer";
+import {useAppSelector} from "../../../../common/hooks/useAppSelector";
+import {listsSelector} from "../../model/listSelectors";
+import {useAppDispatch} from "../../../../common/hooks/useAppDispatch";
 
-export const Lists = memo(() => {
-    const dispatch = useDispatch();
-    const currentLists = useSelector<StoreType, ListType[]>(state => state.lists)
+export const TodoLists = memo(() => {
+    const dispatch = useAppDispatch()
+    const currentLists = useAppSelector(listsSelector)
 
     const addListHandler = useCallback((title: string) => {
         let action = addListTaskAc({title})
