@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import {TodoLists} from "../features/todolists/ui/todolists/TodoLists";
-import {About} from "../About";
+import {About} from "../features/todolists/ui/about/About";
 
 export const PATH = {
     LISTS: "/lists",

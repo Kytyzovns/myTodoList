@@ -3,7 +3,7 @@ export type ThemeModeType = 'dark' | 'light'
 type InitialState = typeof initialState
 
 const initialState = {
-    themeMode: 'light' as ThemeModeType,
+    themeMode: 'dark' as ThemeModeType,
 }
 
 export const appReducer = (state: InitialState = initialState, action: ActionsType): InitialState => {
