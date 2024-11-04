@@ -11,6 +11,7 @@ import {memo, useCallback, useState} from "react";
 import {Sidebar} from "../sidebar/Sidebar";
 import s from "../sidebar/Sidebar.module.css";
 import {ThemeModeType} from "../../../app/app-reducer";
+import {useMenu} from "./bar-hooks";
 
 type ApplicationBarProps = {
     changeTheme: () => void
@@ -19,9 +20,7 @@ type ApplicationBarProps = {
 
 export const ApplicationBar = memo(({changeTheme, themeOn}: ApplicationBarProps) => {
 
-    const [openMenu, setOpenMenu]= useState<boolean>(false)
-
-    const onClickHandler = useCallback(() => setOpenMenu(prevState => !prevState), []);
+    const {openMenu, onClickHandler} = useMenu()
 
     return (
         <Box sx={{flexGrow: 1}}>
