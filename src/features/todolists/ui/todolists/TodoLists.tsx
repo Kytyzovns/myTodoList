@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react';
+import React, {memo, useCallback, useEffect} from 'react';
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid2";
 import {AddItem} from "../../../../common/components/AddItem/AddItem";
@@ -20,6 +20,9 @@ export const TodoLists = memo(() => {
         dispatch(action)
     }, [])
 
+    useEffect(() => {
+
+    }, []);
 
     return (
         <Container fixed>
