@@ -10,6 +10,35 @@ import {addListTaskAc} from "../../model/TasksReducer";
 import {useAppSelector} from "../../../../common/hooks/useAppSelector";
 import {listsSelector} from "../../model/listSelectors";
 import {useAppDispatch} from "../../../../common/hooks/useAppDispatch";
+import axios from "axios";
+
+export type Todolist = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
+}
+
+export type Response<T = {}> = {
+    resultCode: number
+    messages: string[],
+    fieldsErrors: string[]
+    data: T
+}
+
+export type Task = {
+    description: string
+    title: string
+    completed: boolean
+    status: number
+    priority: number
+    startDate: string
+    deadline: string
+    id: string
+    todoListId: string
+    order: number
+    addedDate: string
+}
 
 export const TodoLists = memo(() => {
     const dispatch = useAppDispatch()
@@ -21,8 +50,14 @@ export const TodoLists = memo(() => {
     }, [])
 
     useEffect(() => {
-
-    }, []);
+        axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
+            headers: {
+                Authorization: 'Bearer 71e0c2ff-de01-496f-ad09-99efe054ca5b',
+            }
+        }).then(res => {
+            const todolists = res.data
+        })
+    }, [])
 
     return (
         <Container fixed>
