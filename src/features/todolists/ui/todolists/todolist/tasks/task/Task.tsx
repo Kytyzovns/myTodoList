@@ -13,14 +13,14 @@ type TaskProps = {
     task: TaskType
 }
 export const Task = ({list, task}: TaskProps) => {
-    const {listId} = list
+    const {id : listId} = list
     const dispatch = useDispatch();
 
     const setDoneHandler = useCallback((id: string, isDone: boolean) => {
         dispatch(taskSetDoneAc({isDone, id, listId}))
     }, [])
     const removeTaskHandler = useCallback((id: string) => {
-        dispatch(removeTaskAc({listId, id}))
+        dispatch(removeTaskAc({id: id, listId}))
     }, [])
     const changeTaskTitleHandler = useCallback((title: string, id: string) => {
         dispatch(changeTaskTitleAc({title, id, listId}))

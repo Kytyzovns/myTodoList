@@ -10,15 +10,15 @@ type TodoListTitleProps = {
     list: ListType
 }
 export const TodoListTitle = memo(({list}: TodoListTitleProps) => {
-    const {listId, title} = list
+    const {id, title} = list
     const dispatch = useDispatch();
 
     const changeListTitleHandler = useCallback((title: string) => {
-        dispatch(changeListTitleActionAc({listId, title}))
+        dispatch(changeListTitleActionAc({id: id, title}))
     }, []);
 
     const removeListHandler = useCallback(() => {
-        dispatch(removeListActionAc({listId}))
+        dispatch(removeListActionAc({id: id}))
     }, []);
 
     return (

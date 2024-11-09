@@ -8,12 +8,12 @@ type FilterTasksButtonsProps = {
 }
 
 export const FilterTasksButtons = memo(({list}: FilterTasksButtonsProps) => {
-    const {filter, listId} = list
+    const {filter, id} = list
 
     const dispatch = useDispatch()
 
     const changeFilterTasksHandler = (filter: FilterType) => {
-        dispatch(setFilterActionAc({ listId, filter }))
+        dispatch(setFilterActionAc({ id: id, filter }))
     }
     return (
         <div>

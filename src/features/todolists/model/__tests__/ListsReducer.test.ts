@@ -14,8 +14,8 @@ describe("ListsReducer", () => {
 
     beforeEach(() => {
         initialState = [
-            { listId: "1", title: "Groceries", filter: "all" },
-            { listId: "2", title: "Work", filter: "active" }
+            { id: "1", title: "Groceries", filter: "all" },
+            { id: "2", title: "Work", filter: "active" }
         ];
     });
 
@@ -34,7 +34,7 @@ describe("ListsReducer", () => {
         const action = removeListActionAc({ listId: "1" });
         const newState = ListsReducer(initialState, action);
         expect(newState.length).toBe(1);
-        expect(newState[0].listId).toBe("2");
+        expect(newState[0].id).toBe("2");
     });
 
     test("should change the title of the list", () => {

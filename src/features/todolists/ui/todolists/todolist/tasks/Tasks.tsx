@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import s from "../../../../../../styles/Styles.module.css";
 import {TaskType} from "../../../../model/TasksReducer";
 import {ListType} from "../../../../model/ListsReducer";
@@ -10,12 +10,12 @@ type TasksProps = {
     list: ListType
 }
 export const Tasks = ({list}: TasksProps) => {
-    const {filter, listId} = list
+    const {filter, id} = list
     const tasks = useAppSelector(tasksSelector)
 
     const filteredTasks: TaskType[] = useMemo(() => {
         console.log("tasks", tasks)
-        let fTasks = [...tasks[listId]]
+        let fTasks = [...tasks[id]]
         if (filter === "completed") {
             fTasks = fTasks.filter(t => t.isDone)
         }

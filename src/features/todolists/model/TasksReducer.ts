@@ -49,12 +49,15 @@ export const TaskReducer = (state: TasksType = {}, action: ActionType): TasksTyp
                 } : {...t})
             }
         }
+        case "SET_TASKS": {
+            return {...state, [action.payload.id]: action.payload.tasks}
+        }
         default:
             return state
     }
 }
 
-type ActionType = removeTaskActionType | addTaskActionType | changeTaskTitleType | addListTaskType | taskSetDoneType
+type ActionType = removeTaskActionType | addTaskActionType | changeTaskTitleType | addListTaskType | taskSetDoneType | setTasksAcType
 
 type removeTaskActionType = ReturnType<typeof removeTaskAc>
 
@@ -65,6 +68,8 @@ type changeTaskTitleType = ReturnType<typeof changeTaskTitleAc>
 export type addListTaskType = ReturnType<typeof addListTaskAc>
 
 type taskSetDoneType = ReturnType<typeof taskSetDoneAc>
+
+type setTasksAcType = ReturnType<typeof setTasksAc>
 
 
 export const removeTaskAc = (payload: {listId: string, id: string}) => {
@@ -98,6 +103,13 @@ export const addListTaskAc = (payload: {title?: string}) => {
 export const taskSetDoneAc = (payload: {listId: string, id: string, isDone: boolean}) => {
     return {
         type: "SET-DONE",
+        payload
+    } as const
+}
+
+export const setTasksAc = (payload : {tasks: TaskType[], id: string}) => {
+    return {
+        type: "SET_TASKS",
         payload
     } as const
 }
