@@ -1,5 +1,5 @@
-import {addListTaskType} from "./TasksReducer";
-import {Todolist} from "../ui/todolists/api/todolistsApi.types";
+import { addListTaskType } from "./TasksReducer"
+import { Todolist } from "../ui/todolists/api/todolistsApi.types"
 
 export type FilterType = "all" | "completed" | "active"
 
@@ -10,23 +10,30 @@ export type ListType = {
 export const ListsReducer = (state: ListType[] = [], action: ActionType): ListType[] => {
     switch (action.type) {
         case "ADD-LIST-TASK": {
-            return [...state, {
-                id: action.payload.listId,
-                title: action.payload.title ? action.payload.title : "new list",
-                filter: "all", order: state.length, addedDate: new Date().toString()
-            }]
+            return [
+                ...state,
+                {
+                    id: action.payload.listId,
+                    title: action.payload.title ? action.payload.title : "new list",
+                    filter: "all",
+                    order: state.length,
+                    addedDate: new Date().toString(),
+                },
+            ]
         }
         case "REMOVE-LIST": {
-            return state.filter(l => l.id !== action.payload.listId)
+            return state.filter((l) => l.id !== action.payload.listId)
         }
         case "CHANGE-TITLE": {
-            return state.map(l => l.id === action.payload.listId ? {...l, title: action.payload.title} : {...l})
+            return state.map((l) => (l.id === action.payload.listId ? { ...l, title: action.payload.title } : { ...l }))
         }
         case "SET-FILTER": {
-            return state.map(l => l.id === action.payload.listId ? {...l, filter: action.payload.filter} : {...l})
+            return state.map((l) =>
+                l.id === action.payload.listId ? { ...l, filter: action.payload.filter } : { ...l },
+            )
         }
         case "SET_LISTS": {
-            return action.payload.lists.map((l) => ({...l, filter: "all"}))
+            return action.payload.lists.map((l) => ({ ...l, filter: "all" }))
         }
         default:
             return state
@@ -43,24 +50,24 @@ type changeTitleActionType = ReturnType<typeof changeListTitleActionAc>
 
 type setListsAcType = ReturnType<typeof setListsAc>
 
-export const removeListActionAc = (payload: {listId: string}) => {
+export const removeListActionAc = (payload: { listId: string }) => {
     return {
         type: "REMOVE-LIST",
-        payload
+        payload,
     } as const
 }
 
-export const setFilterActionAc = (payload: {listId: string, filter: FilterType}) => {
+export const setFilterActionAc = (payload: { listId: string; filter: FilterType }) => {
     return {
         type: "SET-FILTER",
-        payload
+        payload,
     } as const
 }
 
-export const changeListTitleActionAc = (payload: {listId: string, title: string}) => {
+export const changeListTitleActionAc = (payload: { listId: string; title: string }) => {
     return {
         type: "CHANGE-TITLE",
-        payload
+        payload,
     } as const
 }
 
@@ -68,7 +75,7 @@ export const setListsAc = (lists: Todolist[]) => {
     return {
         type: "SET_LISTS",
         payload: {
-            lists
-        }
+            lists,
+        },
     } as const
 }

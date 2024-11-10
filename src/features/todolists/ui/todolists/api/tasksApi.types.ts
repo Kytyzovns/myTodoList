@@ -10,3 +10,9 @@ export type DomainTask = {
     order: number
     addedDate: string
 }
+
+export type GetTasksResponse = {
+    error: string | null
+    totalCount: number
+    items: DomainTask[]
+}

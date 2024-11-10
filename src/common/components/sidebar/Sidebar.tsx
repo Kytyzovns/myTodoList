@@ -1,19 +1,18 @@
-import React from 'react';
-import {IconButton, useTheme} from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
+import React from "react"
+import { IconButton, useTheme } from "@mui/material"
+import CloseIcon from "@mui/icons-material/Close"
 import s from "./Sidebar.module.css"
-import {StyledBox, StyledLink} from "./SidebarStyled";
-import {PATH} from "../../../app/Main";
+import { StyledBox, StyledLink } from "./SidebarStyled"
+import { PATH } from "../../../app/Main"
 
 type SidebarProps = {
     open: boolean
     openChange: () => void
 }
-export const Sidebar = ({open, openChange}: SidebarProps) => {
+export const Sidebar = ({ open, openChange }: SidebarProps) => {
     return (
         <StyledBox open={open}>
-
-            <IconButton sx={{width: "24px", height: "24px", margin: "20px"}} onClick={openChange}>
+            <IconButton sx={{ width: "24px", height: "24px", margin: "20px" }} onClick={openChange}>
                 <CloseIcon />
             </IconButton>
 
@@ -22,6 +21,5 @@ export const Sidebar = ({open, openChange}: SidebarProps) => {
                 <StyledLink to={PATH.LISTS}>Lists</StyledLink>
             </nav>
         </StyledBox>
-    );
-};
-
+    )
+}

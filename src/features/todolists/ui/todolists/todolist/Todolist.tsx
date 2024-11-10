@@ -1,43 +1,41 @@
-import React, {memo, useCallback} from 'react';
-import s from '../../../../../styles/Styles.module.css'
-import {AddItem} from "../../../../../common/components/AddItem/AddItem";
-import {AddTaskButton} from "../../../../../MaterialStyles";
-import {addTaskAc} from "../../../model/TasksReducer";
-import {ListType} from "../../../model/ListsReducer";
-import {FilterTasksButtons} from "./flitertasksbuttons/FilterTasksButtons";
-import {Tasks} from "./tasks/Tasks";
-import {TodoListTitle} from "./TodoListTitle/TodoListTitle";
-import {useAppDispatch} from "../../../../../common/hooks/useAppDispatch";
+import React, { memo, useCallback } from "react"
+import s from "../../../../../styles/Styles.module.css"
+import { AddItem } from "../../../../../common/components/AddItem/AddItem"
+import { AddTaskButton } from "../../../../../MaterialStyles"
+import { addTaskAc } from "../../../model/TasksReducer"
+import { ListType } from "../../../model/ListsReducer"
+import { FilterTasksButtons } from "./flitertasksbuttons/FilterTasksButtons"
+import { Tasks } from "./tasks/Tasks"
+import { TodoListTitle } from "./TodoListTitle/TodoListTitle"
+import { useAppDispatch } from "../../../../../common/hooks/useAppDispatch"
 
 type TodolistType = {
     list: ListType
 }
 
-export const Todolist: React.FC<TodolistType> = memo(({
-                                                          list
-                                                      }) => {
-    const {listId} = list
-    const dispatch = useAppDispatch();
+export const Todolist: React.FC<TodolistType> = memo(({ list }) => {
+    const { id: listId } = list
+    const dispatch = useAppDispatch()
 
     const addTaskHandler = useCallback((title: string) => {
-        addTask(listId, title);
-    }, []);
+        addTask(listId, title)
+    }, [])
 
     const addTask = useCallback((listId: string, title: string) => {
-        dispatch(addTaskAc({listId, title}))
+        dispatch(addTaskAc({ listId, title }))
     }, [])
 
     return (
         <div className={s.list}>
             <TodoListTitle list={list} />
-            <AddItem buttonVariant={"contained"} sxButtonStyles={AddTaskButton} addItem={addTaskHandler}
-                     buttonName={"+"}/>
-            <Tasks list={list}/>
-            <FilterTasksButtons list={list}/>
+            <AddItem
+                buttonVariant={"contained"}
+                sxButtonStyles={AddTaskButton}
+                addItem={addTaskHandler}
+                buttonName={"+"}
+            />
+            <Tasks list={list} />
+            <FilterTasksButtons list={list} />
         </div>
-    );
-});
-
-
-
-
+    )
+})

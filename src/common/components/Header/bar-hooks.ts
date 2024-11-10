@@ -1,9 +1,9 @@
-import {useState} from "react";
+import { useState } from "react"
 
 export function useMenu() {
-    const [openMenu, setOpenMenu]= useState<boolean>(false)
+    const [openMenu, setOpenMenu] = useState<boolean>(false)
 
-    const onClickHandler = () => setOpenMenu(prevState => !prevState);
+    const onClickHandler = () => setOpenMenu((prevState) => !prevState)
 
-    return {openMenu, setOpenMenu, onClickHandler}
+    return { openMenu, setOpenMenu, onClickHandler }
 }
