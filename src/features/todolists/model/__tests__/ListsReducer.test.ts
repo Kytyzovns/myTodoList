@@ -13,8 +13,8 @@ describe("ListsReducer", () => {
 
     beforeEach(() => {
         initialState = [
-            { id: "1", title: "Groceries", filter: "all" },
-            { id: "2", title: "Work", filter: "active" },
+            { id: "1", title: "Groceries", filter: "all", order: 0, addedDate: new Date().toString() },
+            { id: "2", title: "Work", filter: "active", order: 1, addedDate: new Date().toString() },
         ]
     })
 
