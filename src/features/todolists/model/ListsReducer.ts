@@ -81,4 +81,4 @@ export const setListsAc = (lists: Todolist[]) => {
     } as const
 }
 
-const setListsThunk = (dispatch: AppDispatch, getState: () => RootState) => {}
+const setListsTC = () => (dispatch: AppDispatch, getState: () => RootState) => {}
