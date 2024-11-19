@@ -3,7 +3,7 @@ import s from "../../../../../../styles/Styles.module.css"
 import { TaskType } from "../../../../model/TasksReducer"
 import { ListType } from "../../../../model/ListsReducer"
 import { Task } from "./task/Task"
-import { useAppSelector } from "../../../../../../common/hooks/useAppSelector"
+import { useAppSelector } from "common/hooks/useAppSelector"
 import { tasksSelector } from "../../../../model/tasksSelectors"
 
 type TasksProps = {

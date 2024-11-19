@@ -1,6 +1,7 @@
 import { addListTaskType } from "./TasksReducer"
 import { Todolist } from "../ui/todolists/api/todolistsApi.types"
 import { AppDispatch, RootState } from "./store"
+import { todoListsApi } from "../ui/todolists/api/todoListsApi"
 
 export type FilterType = "all" | "completed" | "active"
 
@@ -81,4 +82,8 @@ export const setListsAc = (lists: Todolist[]) => {
     } as const
 }
 
-const setListsTC = () => (dispatch: AppDispatch, getState: () => RootState) => {}
+const setListsTC = () => (dispatch: AppDispatch, getState: () => RootState) => {
+    todoListsApi.getTodoList().then((res) => {
+        dispatch(setListsAc(res.data))
+    })
+}

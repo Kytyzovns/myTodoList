@@ -24,22 +24,7 @@ export const TodoLists = memo(() => {
         dispatch(action)
     }, [])
 
-    useEffect(() => {
-        todoListsApi.getTodoList().then((res) => {
-            console.log("test", res.data)
-            dispatch(setListsAc(res.data))
-            res.data.forEach((l) => {
-                tasksApi.getTasks(l.id).then((res) => {
-                    dispatch(
-                        setTasksAc({
-                            tasks: res.data.items.map((t) => ({ id: t.id, title: t.title, isDone: false })),
-                            id: l.id,
-                        }),
-                    )
-                })
-            })
-        })
-    }, [])
+    useEffect(() => {}, [])
 
     return (
         <Container fixed>
