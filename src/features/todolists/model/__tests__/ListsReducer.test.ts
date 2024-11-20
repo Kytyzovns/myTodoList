@@ -1,6 +1,6 @@
 import { addListTaskType } from "../TasksReducer"
 import {
-    changeListTitleActionAc,
+    changeListTitleAc,
     FilterType,
     ListsReducer,
     ListType,
@@ -37,7 +37,7 @@ describe("ListsReducer", () => {
     })
 
     test("should change the title of the list", () => {
-        const action = changeListTitleActionAc({ listId: "1", title: "Updated Groceries" })
+        const action = changeListTitleAc({ listId: "1", title: "Updated Groceries" })
         const newState = ListsReducer(initialState, action)
         expect(newState[0].title).toBe("Updated Groceries")
         expect(newState[1].title).toBe("Work")

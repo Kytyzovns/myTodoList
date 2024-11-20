@@ -1,4 +1,4 @@
-import { addListTaskType } from "./TasksReducer"
+import { addListTaskAc, addListTaskType } from "./TasksReducer"
 import { Todolist } from "../ui/todolists/api/todolistsApi.types"
 import { AppDispatch, RootState } from "./store"
 import { todoListsApi } from "../ui/todolists/api/todoListsApi"
@@ -12,16 +12,7 @@ export type ListType = {
 export const ListsReducer = (state: ListType[] = [], action: ActionType): ListType[] => {
     switch (action.type) {
         case "ADD-LIST-TASK": {
-            return [
-                ...state,
-                {
-                    id: action.payload.listId,
-                    title: action.payload.title ? action.payload.title : "new list",
-                    filter: "all",
-                    order: state.length,
-                    addedDate: new Date().toString(),
-                },
-            ]
+            return [...state, { ...action.payload, filter: "all" }]
         }
         case "REMOVE-LIST": {
             return state.filter((l) => l.id !== action.payload.listId)
@@ -44,11 +35,11 @@ export const ListsReducer = (state: ListType[] = [], action: ActionType): ListTy
 
 type ActionType = removeListActionType | setFilterActionType | changeTitleActionType | addListTaskType | setListsAcType
 
-type removeListActionType = ReturnType<typeof removeListActionAc>
+export type removeListActionType = ReturnType<typeof removeListActionAc>
 
 type setFilterActionType = ReturnType<typeof setFilterActionAc>
 
-type changeTitleActionType = ReturnType<typeof changeListTitleActionAc>
+type changeTitleActionType = ReturnType<typeof changeListTitleAc>
 
 type setListsAcType = ReturnType<typeof setListsAc>
 
@@ -66,7 +57,7 @@ export const setFilterActionAc = (payload: { listId: string; filter: FilterType 
     } as const
 }
 
-export const changeListTitleActionAc = (payload: { listId: string; title: string }) => {
+export const changeListTitleAc = (payload: { listId: string; title: string }) => {
     return {
         type: "CHANGE-TITLE",
         payload,
@@ -82,8 +73,29 @@ export const setListsAc = (lists: Todolist[]) => {
     } as const
 }
 
-const setListsTC = () => (dispatch: AppDispatch, getState: () => RootState) => {
+//Thunk
+
+export const setListsTC = () => (dispatch: AppDispatch, getState: () => RootState) => {
     todoListsApi.getTodoList().then((res) => {
         dispatch(setListsAc(res.data))
     })
 }
+
+export const addListTC = (title: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    todoListsApi.addTodoList(title).then((res) => {
+        dispatch(addListTaskAc(res.data.data.item))
+    })
+}
+
+export const removeListTC = (listId: string) => (dispatch: AppDispatch, getState: () => RootState) => {
+    todoListsApi.removeList(listId).then(() => {
+        dispatch(removeListActionAc({ listId }))
+    })
+}
+
+export const changeListTitleTC =
+    (param: { title: string; listId: string }) => (dispatch: AppDispatch, getState: () => RootState) => {
+        todoListsApi.changeTitle(param).then(() => {
+            dispatch(changeListTitleAc(param))
+        })
+    }

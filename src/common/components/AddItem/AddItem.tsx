@@ -29,11 +29,14 @@ export const AddItem = memo(({ addItem, buttonName, buttonVariant, sxButtonStyle
         setError(null)
     }, [])
 
-    const InputPressHandler = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            addTaskItemHandler()
-        }
-    }, [])
+    const InputPressHandler = useCallback(
+        (e: KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === "Enter") {
+                addTaskItemHandler()
+            }
+        },
+        [currentTitle],
+    )
 
     return (
         <div>

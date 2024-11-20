@@ -5,26 +5,22 @@ import { AddItem } from "common/components/AddItem/AddItem"
 import { AddItemInput } from "../../../../MaterialStyles"
 import Paper from "@mui/material/Paper"
 import { Todolist } from "./todolist/Todolist"
-import { useDispatch } from "react-redux"
-import { addListTaskAc, setTasksAc } from "../../model/TasksReducer"
 import { useAppSelector } from "common/hooks/useAppSelector"
 import { listsSelector } from "../../model/listSelectors"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
-import axios from "axios"
-import { todoListsApi } from "./api/todoListsApi"
-import { setListsAc } from "../../model/ListsReducer"
-import { tasksApi } from "./api/tasksApi"
+import { addListTC, setListsTC } from "../../model/ListsReducer"
 
 export const TodoLists = memo(() => {
     const dispatch = useAppDispatch()
     const currentLists = useAppSelector(listsSelector)
 
     const addListHandler = useCallback((title: string) => {
-        let action = addListTaskAc({ title })
-        dispatch(action)
+        dispatch(addListTC(title))
     }, [])
 
-    useEffect(() => {}, [])
+    useEffect(() => {
+        dispatch(setListsTC())
+    }, [])
 
     return (
         <Container fixed>
