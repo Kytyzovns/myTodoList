@@ -1,57 +1,71 @@
-import { addListTaskType } from "../TasksReducer"
+// Sample data for testing
 import {
     changeListTitleAc,
-    FilterType,
     ListsReducer,
     ListType,
     removeListActionAc,
     setFilterActionAc,
+    setListsAc,
 } from "../ListsReducer"
+import { Todolist } from "../../ui/todolists/api/todolistsApi.types"
 
+const initialState: ListType[] = [
+    { id: "1", title: "List 1", order: 0, addedDate: "", filter: "all" },
+    { id: "2", title: "List 2", order: 1, addedDate: "", filter: "active" },
+]
+
+// Test suite for ListsReducer
 describe("ListsReducer", () => {
-    let initialState: ListType[]
-
-    beforeEach(() => {
-        initialState = [
-            { id: "1", title: "Groceries", filter: "all", order: 0, addedDate: new Date().toString() },
-            { id: "2", title: "Work", filter: "active", order: 1, addedDate: new Date().toString() },
-        ]
-    })
-
-    test("should add a new list task", () => {
-        const action: addListTaskType = {
-            type: "ADD-LIST-TASK",
-            payload: { listId: "3", title: "New Task" },
-        }
-
+    it("should handle ADD-LIST-TASK", () => {
+        const newList = { id: "3", title: "List 3", order: 2, addedDate: "" }
+        const action = { type: "ADD-LIST-TASK", payload: newList } as const
         const newState = ListsReducer(initialState, action)
-        expect(newState.length).toBe(3)
-        expect(newState[2].title).toBe("New Task")
+
+        expect(newState).toHaveLength(3)
+        expect(newState).toEqual([...initialState, { ...newList, filter: "all" }])
     })
 
-    test("should remove a list by id", () => {
+    it("should handle REMOVE-LIST", () => {
         const action = removeListActionAc({ listId: "1" })
         const newState = ListsReducer(initialState, action)
-        expect(newState.length).toBe(1)
-        expect(newState[0].id).toBe("2")
+
+        expect(newState).toHaveLength(1)
+        expect(newState).not.toContainEqual(initialState[0])
     })
 
-    test("should change the title of the list", () => {
-        const action = changeListTitleAc({ listId: "1", title: "Updated Groceries" })
+    it("should handle CHANGE-TITLE", () => {
+        const action = changeListTitleAc({ listId: "1", title: "Updated List 1" })
         const newState = ListsReducer(initialState, action)
-        expect(newState[0].title).toBe("Updated Groceries")
-        expect(newState[1].title).toBe("Work")
+
+        expect(newState[0].title).toBe("Updated List 1")
+        expect(newState[1].title).toBe("List 2")
     })
 
-    test("should set filter for a list", () => {
-        const action = setFilterActionAc({ listId: "2", filter: "completed" as FilterType })
+    it("should handle SET-FILTER", () => {
+        const action = setFilterActionAc({ listId: "2", filter: "completed" })
         const newState = ListsReducer(initialState, action)
+
         expect(newState[1].filter).toBe("completed")
+        expect(newState[0].filter).toBe("all")
     })
 
-    test("should return the default state if the action type is not recognized", () => {
-        const action = { type: "UNKNOWN_ACTION" }
-        const newState = ListsReducer(initialState, action as any)
-        expect(newState).toEqual(initialState)
+    it("should handle SET_LISTS", () => {
+        const newLists: Todolist[] = [
+            { id: "3", title: "New List 1", order: 0, addedDate: "" },
+            { id: "4", title: "New List 2", order: 1, addedDate: "" },
+        ]
+        const action = setListsAc(newLists)
+        const newState = ListsReducer([], action)
+
+        expect(newState).toHaveLength(2)
+        expect(newState[0].filter).toBe("all")
+        expect(newState[1].title).toBe("New List 2")
+    })
+
+    it("should return the initial state when the action is not recognized", () => {
+        const action = { type: "UNKNOWN_ACTION" } as any
+        const newState = ListsReducer(initialState, action)
+
+        expect(newState).toBe(initialState)
     })
 })

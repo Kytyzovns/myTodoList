@@ -8,8 +8,8 @@
         "@mui/icons-material": "^6.0.2",
         "@mui/material": "^6.0.2",
         "@mui/styled-engine-sc": "^6.0.2",
-        "@testing-library/jest-dom": "^5.14.1",
-        "@testing-library/react": "^13.0.0",
+        "@testing-library/jest-dom": "^6.6.3",
+        "@testing-library/react": "^16.0.1",
         "@testing-library/user-event": "^13.2.1",
         "@types/jest": "^27.0.1",
         "@types/node": "^16.7.13",
@@ -59,6 +59,8 @@
         ]
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.26.0",
+        "@babel/preset-typescript": "^7.26.0",
         "@chromatic-com/storybook": "1.8.0",
         "@storybook/addon-essentials": "^8.2.9",
         "@storybook/addon-interactions": "^8.2.9",
@@ -69,9 +71,17 @@
         "@storybook/react": "^8.2.9",
         "@storybook/react-webpack5": "^8.2.9",
         "@storybook/test": "^8.2.9",
+        "babel-jest": "^29.7.0",
         "eslint-plugin-storybook": "^0.8.0",
+        "jest": "^29.7.0",
         "prettier": "3.3.3",
         "prop-types": "15.8.1",
+        "ts-jest": "^29.2.5",
         "webpack": "5.94.0"
+    },
+    "compilerOptions": {
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true
     }
 }
